@@ -40,7 +40,7 @@ public class TestContext {
         driver.quit();
     }
 
-    public static void initialize(String browser, String testEnv, boolean isHeadless) {
+    public static void initialize(String browser, String testEnv, boolean isHeadless, boolean envLinux) {
         Dimension size = new Dimension(1920, 1080);
         Point position = new Point(0, 0);
         if (testEnv.equals("local")) {
