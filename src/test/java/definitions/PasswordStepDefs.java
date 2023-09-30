@@ -5,7 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
-
+import org.openqa.selenium.Keys;
 
 
 import static support.TestContext.getDriver;
@@ -25,8 +25,8 @@ public class PasswordStepDefs {
     }
 
     @Then("I click button {string} vs")
-    public void iClickButtonVs(String arg0) {
-        getDriver().findElement(By.xpath("//span[contains(text(),'Register Now')]")).click();
+    public void iClickButtonVs(String btnName) {
+        getDriver().findElement(By.xpath("//span[contains(text(),'"+btnName +"')]")).click();
     }
 
     @Then("I type {string} into password field vs")
@@ -41,13 +41,16 @@ public class PasswordStepDefs {
 
     @Then("the password error message {string} is displayed vs")
     public void thePasswordErrorMessageIsDisplayedVs(String expectedError) {
-        String actualError = getDriver().findElement(By.id("mat-error-0")).getText();
+        String actualError = getDriver().findElement(By.xpath("//*[text()='Should be at least 5 characters']")).getText();
 
     }
 
     @When("I clear password field vs")
     public void iClearPasswordFieldVs() {
         getDriver().findElement(By.id("mat-input-4")).clear();
+//
+//        I_tried_to_come_up_with_better_xpath,but i failed miserably
+//                will appreciate an advice
 
     }
 
@@ -73,4 +76,33 @@ public class PasswordStepDefs {
     public void iClearConfirmPasswordFieldVs() {
         getDriver().findElement(By.xpath("//input[@formcontrolname='confirmPassword']")).clear();
     }
+
+    @Then("I type {string} into first name field vs")
+    public void iTypeIntoFirstNameFieldVs(String first_name) {
+        getDriver().findElement(By.xpath("//input[@formcontrolname='firstName']")).sendKeys(first_name);
+    }
+
+    @Then("I type {string} into last name field vs")
+    public void iTypeIntoLastNameFieldVs(String last_name) {
+        getDriver().findElement(By.xpath("//input[@formcontrolname='lastName']")).sendKeys(last_name);
+    }
+
+    @Then("I type {string} into email field vs")
+    public void iTypeIntoEmailFieldVs(String email) {
+        getDriver().findElement(By.xpath("//input[@formcontrolname='email']")).sendKeys(email);
+    }
+
+    @Then("I type {string} into group code field vs")
+    public void iTypeIntoGroupCodeFieldVs(String group_code) {
+        getDriver().findElement(By.xpath("//input[@formcontrolname='group']")).sendKeys(group_code);
+    }
+
+
+    @Then("I verify that the password is masked vs")
+    public void iVerifyThatThePasswordIsMaskedVs() {
+        assertThat(getDriver().findElement(By.xpath("//input[@formcontrolname='confirmPassword']")).getAttribute("type").equals("password")).isTrue();
+    }
+
+
 }
+

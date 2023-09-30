@@ -27,3 +27,21 @@
       And I delete quiz "Demo TA Quiz" from the list of quizzes
 
 
+    Scenario: Verify Password/Confirm password field (min(5) characters)
+      Given I open "login" page vs
+      Then I click button "Register Now" vs
+      Then I type "Test" into first name field vs
+      And I wait for 2 sec
+      Then I type "Tester" into last name field vs
+      Then I type "test@test.com" into email field vs
+      Then I type "AA" into group code field vs
+      And I wait for 2 sec
+      Then I type "a" into password field vs
+      And I click on "Confirm Password" field vs
+      And I wait for 2 sec
+      Then the password error message "Should be at least 5 characters" is displayed vs
+      When I clear password field vs
+      Then the password error message "This field is required" is displayed vs
+      When I type "abc12" into password field vs
+      Then the password error message is not displayed vs
+      Then I type "abc12" into confirm password field vs
