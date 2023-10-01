@@ -26,6 +26,12 @@
       Scenario: Verify Password/confirm password field (max(32) characters)
         Given I open "login" page vs
         Then I click button "Register Now" vs
+        Then I type "Test" into first name field vs
+        And I wait for 2 sec
+        Then I type "Tester" into last name field vs
+        Then I type "test@test.com" into email field vs
+        Then I type "AA" into group code field vs
+        And I wait for 2 sec
         Then I type "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" into password field vs
         And I click on "Confirm Password" field vs
         Then the password error message "Not more then 32 characters" is displayed vs
@@ -39,7 +45,7 @@
         Then I type "abc12" into confirm password field vs
 
         @registration3
-        Scenario: Verify Password must match Confirm Password
+        Scenario: Verify Password must match Confirm Password. Error message is displayed
 
           Given I open "login" page vs
           Then I click button "Register Now" vs
@@ -132,6 +138,30 @@
         | "login" | "Register Now" | "Test"     | 2   | "Tester"  | "test@test.com" | "AA"       | "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"| "Confirm Password" | "Error. Max 32 characters" | "This field is required" | "abc12"   | "abc12"         |
 
         | "login" | "Register Now" | "Test"     | 2   | "Tester"  | "test@test.com" | "AA"       | "abc  123"| "Confirm Password" | "Whitespaces are not allowed" | "This field is required" | "abc  123"   | "abc  123"         |
+
+
+    @registration8
+    Scenario:Verify Password must match Confirm Password.
+
+      Given I open "login" page vs
+      Then I click button "Register Now" vs
+      Then I type "Test" into first name field vs
+      And I wait for 2 sec
+      Then I type "Tester" into last name field vs
+      Then I type "test@test.com" into email field vs
+      Then I type "AA" into group code field vs
+      And I wait for 2 sec
+      Then I type "abc123" into password field vs
+      Then I type "abc123" into confirm password field vs
+      Then I type "45" into password field
+      And I wait for 2 sec
+      Then the error message "Entered passwords should match" is displayed vs
+
+#      The error message was not displayed, the user was allowed to register
+
+      Then I click button "Register Me" vs
+
+
 
 
 
