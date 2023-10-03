@@ -29,7 +29,8 @@ Feature: Predefined Steps To Test Total Questions Allowed
 
   @totalQs2
   Scenario: Verify Maximum Number of Question Allowed
-    When I add 50 questions to the quiz_kc
+    # Maximum listed on Specifications is 50
+    When I add 5 questions to the quiz_kc
     And save the quiz_kc
     Then go to the "List of Quizzes" and verify total questions of quiz_kc
     Then delete the quiz_kc

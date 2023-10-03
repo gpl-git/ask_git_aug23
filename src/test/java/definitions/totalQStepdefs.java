@@ -126,9 +126,10 @@ public class totalQStepdefs {
     }
 
     @When("I click on the Add Question button_kc")
-    public void iClickOnTheAddQuestionButton_kc() {
+    public void iClickOnTheAddQuestionButton_kc() throws InterruptedException{
         xpath = "//form/div/button";
         getDriver().findElement(By.xpath(xpath)).click();
+        Thread.sleep(2000);
     }
 
     @Then("{string} and Passing Rate will appear_kc")
@@ -161,9 +162,11 @@ public class totalQStepdefs {
             case 1: {
                 match = "Textual";
                 xpath = root + "//*[contains(text(),'" + match + "')]";
-                getDriver().findElement(By.xpath(xpath)).click();
                 halt = new WebDriverWait(getDriver(), Duration.ofSeconds(3));
+                halt.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+                getDriver().findElement(By.xpath(xpath)).click();
                 xpath = root + "//textarea[@placeholder='Question *']";
+                halt = new WebDriverWait(getDriver(), Duration.ofSeconds(3));
                 halt.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
                 getDriver().findElement(By.xpath(xpath)).sendKeys("?? " + RndTxt() + " ??");
                 break;
@@ -172,6 +175,8 @@ public class totalQStepdefs {
                 int Opt = 0;
                 match = "Single";
                 xpath = root + "//*[contains(text(),'" + match + "')]";
+                halt = new WebDriverWait(getDriver(), Duration.ofSeconds(3));
+                halt.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
                 getDriver().findElement(By.xpath(xpath)).click();
                 halt = new WebDriverWait(getDriver(), Duration.ofSeconds(3));
                 xpath = root + "//textarea[@placeholder='Question *']";
@@ -193,6 +198,8 @@ public class totalQStepdefs {
                 int Opt = 0;
                 match = "Multiple";
                 xpath = root + "//*[contains(text(),'" + match + "')]";
+                halt = new WebDriverWait(getDriver(), Duration.ofSeconds(3));
+                halt.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
                 getDriver().findElement(By.xpath(xpath)).click();
                 halt = new WebDriverWait(getDriver(), Duration.ofSeconds(3));
                 xpath = root + "//textarea[@placeholder='Question *']";
@@ -238,16 +245,20 @@ public class totalQStepdefs {
 
     @Then("go to the {string} and verify total questions of quiz_kc")
     public void goToTheAndVerifyTotalQuestionsOfQuiz_kc(String arg0) {
+        String root;
         xpath = "//h4[contains(text(),'"+arg0+"')]";
         halt = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
         halt.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
         assertThat(getDriver().findElement(By.xpath(xpath)).isDisplayed()).isTrue();
         xpath = "//mat-panel-title[contains(text(),'"+QuizTitle+"')]";
+        root = xpath;
         assertThat(getDriver().findElement(By.xpath(xpath)).isDisplayed()).isTrue();
-        xpath = xpath + "/..//mat-panel-description";
+        xpath = root + "/..//mat-panel-description";
         assertThat(getDriver().findElement(By.xpath(xpath)).getText().contains(Integer.toString(numOfQ))).isTrue();
-        /*String root = xpath + "/../../..";
-        xpath = root + "//tbody";
+        /*
+        xpath = root + "/../..//span[contains(@class,'indicator')]";
+        getDriver().findElement(By.xpath(xpath)).click();
+        xpath = root + "/../../..//tbody";
         System.out.println(xpath);
         element = getDriver().findElement(By.xpath(xpath));
         List<WebElement> rows = element.findElements(By.tagName("tr"));
@@ -278,14 +289,17 @@ public class totalQStepdefs {
         root = "//mat-panel-title[contains(text(),'"+QuizTitle+"')]/../../..";
         xpath = root + "//button[@color='warn']";
         getDriver().findElement(By.xpath(xpath)).click();
-        Thread.sleep(1000);
-        xpath = "//ac-modal-confirmation//button/span[contains(text(),'Delete')]";
+        xpath = "//mat-dialog-container/ac-modal-confirmation/div[2]/button[2]";
+        halt = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
+        halt.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+        //xpath = "//ac-modal-confirmation//button/span[contains(text(),'Delete')]";
         getDriver().findElement(By.xpath(xpath)).click();
+        Thread.sleep(3000);
     }
 
 
     @When("I add {int} questions to the quiz_kc")
-    public void iAddQuestionsToTheQuiz_kc(int qty) {
+    public void iAddQuestionsToTheQuiz_kc(int qty) throws InterruptedException {
         for (int i=0; i<qty; i++) {
             iClickOnTheAddQuestionButton_kc();
             completeRequiredInfoOfTheQuestion_kc(i+1);
