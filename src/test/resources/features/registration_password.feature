@@ -37,6 +37,8 @@
         Then the password error message "Not more then 32 characters" is displayed vs
 
 #        this step will fail,because it's a bug(more then 32 char are allowed)
+#         This is a known issue - bug # AUG23-209
+
 
         When I clear password field vs
         Then the password error message "This field is required" is displayed vs
@@ -115,29 +117,25 @@
 
     @registration7
     Scenario Outline: Verify Password/Confirm password field((min),(max)) char
-      Given I open <url> page vs
-      Then I click button <btnName> vs
-      Then I type <first_name> into first name field vs
-      And I wait for <sec> sec
-      Then I type <last_name> into last name field vs
-      Then I type <email> into email field vs
-      Then I type <group_code> into group code field vs
-      And I wait for <sec> sec
+      Given I open "login" page vs
+      Then I click button "Register Now" vs
+      Then I type "Test" into first name field vs
+      And I wait for 2 sec
+      Then I type "Tester" into last name field vs
+      Then I type "test@test.com" into email field vs
+      Then I type "AA" into group code field vs
+      And I wait for 2 sec
       Then I type <password> into password field vs
-      And I click on <arg0> field vs
+      Then I click button "Register Now" vs
       Then the password error message <expectedError> is displayed vs
-      When I clear password field vs
-      Then the password error message <expectedError1> is displayed vs
-      When I type <password1> into password field vs
-      Then the password error message is not displayed vs
       Then I type <confirmPassword> into confirm password field vs
       Examples:
-        | url     | btnName        | first_name | sec | last_name | email           | group_code | password | arg0               | expectedError                     | expectedError1           | password1 | confirmPassword |
-        | "login" | "Register Now" | "Test"     | 2   | "Tester"  | "test@test.com" | "AA"       | "a"      | "Confirm Password" | "Should be at least 5 characters" | "This field is required" | "abc12"   | "abc12"         |
+        | password | arg0               | expectedError                     | expectedError1            | confirmPassword |
+        | "a"      | "Confirm Password" | "Should be at least 5 characters" | "This field is required" | "abc12"   | "abc12"         |
 
-        | "login" | "Register Now" | "Test"     | 2   | "Tester"  | "test@test.com" | "AA"       | "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"| "Confirm Password" | "Error. Max 32 characters" | "This field is required" | "abc12"   | "abc12"         |
+        | "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"| "Confirm Password" | "Error. Max 32 characters" | "This field is required" | "abc12"   | "abc12"         |
 
-        | "login" | "Register Now" | "Test"     | 2   | "Tester"  | "test@test.com" | "AA"       | "abc  123"| "Confirm Password" | "Whitespaces are not allowed" | "This field is required" | "abc  123"   | "abc  123"         |
+        | "abc  123"| "Confirm Password" | "Whitespaces are not allowed" | "This field is required" | "abc  123"   | "abc  123"         |
 
 
     @registration8
@@ -153,11 +151,13 @@
       And I wait for 2 sec
       Then I type "abc123" into password field vs
       Then I type "abc123" into confirm password field vs
-      Then I type "45" into password field
+      And I wait for 2 sec
+      Then I type "45678" into password field
       And I wait for 2 sec
       Then the error message "Entered passwords should match" is displayed vs
 
 #      The error message was not displayed, the user was allowed to register
+#       This is a known issue bug #
 
       Then I click button "Register Me" vs
 

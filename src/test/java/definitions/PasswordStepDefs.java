@@ -47,10 +47,8 @@ public class PasswordStepDefs {
 
     @When("I clear password field vs")
     public void iClearPasswordFieldVs() {
+//        getDriver().findElement(By.cssSelector("#mat-error-2"));
         getDriver().findElement(By.id("mat-input-4")).clear();
-//
-//        I_tried_to_come_up_with_better_xpath,but i failed miserably
-//                will appreciate an advice
 
     }
 
@@ -66,7 +64,9 @@ public class PasswordStepDefs {
     }
 
     @Then("the error message {string} is displayed vs")
-    public void theErrorMessageIsDisplayedVs(String args0) {
+    public void theErrorMessageIsDisplayedVs(String errorDisplayed) {
+       String error = getDriver().findElement(By.xpath("//*[text()='Entered passwords should match']")).getText();
+
 
 
 
