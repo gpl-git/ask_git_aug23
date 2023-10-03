@@ -4,6 +4,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.maven.surefire.shared.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -73,6 +74,19 @@ public class RegistrationEmailStepDefs {
     public void iGetAlert(String alert) {
         String error = getDriver().findElement(By.xpath("//simple-snack-bar")).getText();
         assertThat(error.contains(alert)).isTrue();
+    }
+
+    @When("I enter {int} characters into each part of email")
+    public void iEnterCharactersIntoEachPartOfEmail(int num) {
+        boolean useLetters = true;
+        boolean useNumbers = true;
+
+        String generatedString = RandomStringUtils.random(num, useLetters, useNumbers);
+        String email = generatedString + "@" + generatedString + "." + generatedString;
+        getDriver().findElement(By.xpath("//input[@placeholder='Email']")).sendKeys(email);
+        System.out.println(email);
+
+
     }
 }
 

@@ -58,7 +58,7 @@ Feature: Test Set "Registration Email"
   Scenario: More, than max 128 characters
     When I type "First" in first name field
     And I type "Last" in last name field
-    When I enter email "emailtestememailteststemailtestenmailtestemailtestemailtestemail@testemailtestememailteststemailtestenmailtestemailtestemailtest.cmcomcomcomcomcomcomcomcomcomcomcomcomcomcomcomcomcomcomcomcomm"
+    When I enter 43 characters into each part of email
     And enter group code "any"
     When I enter password "12345"
     And I retype password in Confirm password "12345"
