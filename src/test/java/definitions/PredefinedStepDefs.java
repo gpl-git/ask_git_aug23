@@ -40,10 +40,7 @@ public class PredefinedStepDefs {
         getDriver().findElement(By.xpath("//input[@formcontrolname='password']")).sendKeys(password);
     }
 
-    @When("I click button {string}")
-    public void iClickButton(String btnName) {
-        getDriver().findElement(By.xpath("//span[contains(text(),'"+btnName +"')]")).click();
-    }
+
 
     @And("I click {string} menu item")
     public void iClickMenuItem(String menuItem) {
@@ -53,6 +50,10 @@ public class PredefinedStepDefs {
     @When("I type {string} into quiz title field")
     public void iTypeIntoQuizTitleField(String quizTitle) {
         getDriver().findElement(By.xpath("//input[@formcontrolname='name']")).sendKeys(quizTitle);
+    }
+    @And("I click button {string}")
+    public void iClickButton(String btn) {
+        getDriver().findElement(By.xpath("//span[contains(text(),'" + btn + "')]")).click();
     }
 
     @When("I add a question")
