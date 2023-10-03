@@ -74,7 +74,6 @@ public class RegistrationEmailStepDefs {
         String error = getDriver().findElement(By.xpath("//simple-snack-bar")).getText();
         assertThat(error.contains(alert)).isTrue();
     }
-
 }
 
 

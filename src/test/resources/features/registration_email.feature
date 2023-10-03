@@ -8,7 +8,7 @@ Feature: Test Set "Registration Email"
     Given I go to "Registration" page IB
 
   @registration_email_valid
-  Scenario Outline: Valid email address -positive
+  Scenario Outline: Valid email address
     When I type "First" in first name field
     And I type "Last" in last name field
     When I enter email <email>
@@ -32,7 +32,7 @@ Feature: Test Set "Registration Email"
 
 
   @registration_email_invalid
-  Scenario Outline: Invalid email address - negative
+  Scenario Outline: Invalid email address
     When I type "First" in first name field
     And I type "Last" in last name field
     When I enter email <email>
