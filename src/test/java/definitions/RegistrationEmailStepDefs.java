@@ -29,50 +29,52 @@ public class RegistrationEmailStepDefs {
         getDriver().findElement(By.xpath("//*[@placeholder='First Name']")).sendKeys(fName);
     }
 
-    @Then("I type {string} in last name field")
+    @And("I type {string} in last name field")
     public void iTypeInLastNameField(String lName) {
         getDriver().findElement(By.xpath("//*[@placeholder='Last Name']")).sendKeys(lName);
     }
 
-    @Then("I enter email {string}")
+    @When("I enter email {string}")
     public void iEnterEmail(String email) {
         getDriver().findElement(By.xpath("//input[@placeholder='Email']")).sendKeys(email);
     }
 
-    @Then("enter group code {string}")
+    @And("enter group code {string}")
     public void enterGroupCode(String groupCode) {
         getDriver().findElement(By.xpath("//input[@placeholder='Group Code']")).sendKeys(groupCode);
     }
 
-    @Then("I enter password {string}")
+    @When("I enter password {string}")
     public void iEnterPassword(String pswd) {
         getDriver().findElement(By.xpath("//input[@placeholder='Password']")).sendKeys(pswd);
     }
 
-    @Then("I retype password in Confirm password {string}")
+    @And("I retype password in Confirm password {string}")
     public void iRetypePasswordInConfirmPassword(String confirmPswd) {
         getDriver().findElement(By.xpath("//input[@placeholder='Confirm Password']")).sendKeys(confirmPswd);
     }
 
-    @Then("I press {string} button")
+    @When("I press {string} button")
     public void iPressButton(String btn) {
         getDriver().findElement(By.xpath("//span[text()='" + btn + "']")).click();
     }
 
-    @And("I get pop-up message {string}")
+    @Then("I get pop-up message {string}")
     public void iGetPopUpMessage(String popUp) {
         assertThat(getDriver().findElement(By.xpath("//h4[contains(text(),'" + popUp + "')]")).isDisplayed()).isTrue();
     }
 
-    @And("I get error message {string}")
+    @Then("I get error message {string}")
     public void iGetErrorMessage(String errorMsg) {
         assertThat(getDriver().findElement(By.xpath("//mat-error[text()='" + errorMsg + "']")).isDisplayed()).isTrue();
     }
 
-    @And("I get alert {string}")
+    @Then("I get alert {string}")
     public void iGetAlert(String alert) {
-        getDriver().getWindowHandle().contains(alert);
+        String error = getDriver().findElement(By.xpath("//simple-snack-bar")).getText();
+        assertThat(error.contains(alert)).isTrue();
     }
+
 }
 
 
