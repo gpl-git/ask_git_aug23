@@ -5,6 +5,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -164,8 +165,28 @@ public class MultipleChoiceSiarheyeuStepDefs {
     }
 
 
+    @And("I type {int} characters into {string} field of {string} question")
+    public void iTypeCharactersIntoFieldOfQuestion(int num, String optionNum, String questionNum) {
+        boolean useLetters = true;
+        boolean useNumbers = true;
+        String genString = RandomStringUtils.random(num, useLetters, useNumbers);
+        getDriver().findElement(By.xpath("//mat-panel-title[contains(text(),'" + questionNum + "')]/following::textarea[@placeholder='" + optionNum + "*']")).sendKeys(genString);
+    }
 
+    @And("I add upp to {int} options in {string}")
+    public void iAddUppToOptionsIn(int num, String questionNum) {
+        for (int i= 3; i <= num; i++){
+            getDriver().findElement(By.xpath("//*[contains(text(),'"+questionNum+"')]/following::*[contains(text(),'Add Option')]")).click();
+            getDriver().findElement(By.xpath("//mat-panel-title[contains(text(),'"+questionNum+"')]/../../..//*[@placeholder='Option "+i+"*']")).sendKeys("Option " +i);
 
+        }
+    }
+
+    @Then("I should see an {string} error in {string}")
+    public void iShouldSeeAnErrorIn(String errortext, String questionNum) {
+        String actualText = getDriver().findElement(By.xpath("//mat-panel-title[contains(text(),'" + questionNum + "')]/following::mat-error")).getText();
+        assertThat(actualText).containsIgnoringCase(errortext);
+    }
 }
 
 
