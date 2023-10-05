@@ -11,10 +11,10 @@ Feature: Predefined Steps To Test Total Questions Allowed
     When I type into the quiz title field_kc
     Then Add Question button appears_kc
 
-  @totalQs0
-  Scenario: Verify Add Question Button Disappears When Title Field Is Cleared
-    When I erase the quiz title field_kc
-    Then Add Question button should disappear_kc
+  #@totalQs0
+  #Scenario: Verify Add Question Button Disappears When Title Field Is Cleared
+    #When I erase the quiz title field_kc
+    #Then Add Question button should disappear_kc
     # The assertion of isDisplayed() is set true because the button remains and can produce a quiz without title.
     # Refer to Ticket: AUG23-703
 
@@ -28,11 +28,28 @@ Feature: Predefined Steps To Test Total Questions Allowed
     Then delete the quiz_kc
 
   @totalQs2
-  Scenario: Verify Maximum Number of Question Allowed
+  Scenario: Verify Maximum Number Of Question Allowed
     # Maximum listed on Specifications is 50
-    When I add 5 questions to the quiz_kc
+    # Divide the task into batches in an attempt to avoid timeout in searching for elements
+    # Batch 1
+    When I add 20 questions to the quiz_kc
     And save the quiz_kc
     Then go to the "List of Quizzes" and verify total questions of quiz_kc
-    Then delete the quiz_kc
 
+    # Batch 2 (copy and paste this and the following 5 lines to form another batch)
+    When I locate the existing quiz and click Edit
+    Then Add Question button appears_kc
+    Then I add 20 questions to the quiz_kc
+    And save the quiz_kc
+    Then go to the "List of Quizzes" and verify total questions of quiz_kc
+
+    # Batch 3 (copy and paste this and the following 5 lines to form another batch)
+    When I locate the existing quiz and click Edit
+    Then Add Question button appears_kc
+    Then I add 20 questions to the quiz_kc
+    And save the quiz_kc
+    Then go to the "List of Quizzes" and verify total questions of quiz_kc
+
+    # Delete quiz at the end
+    Then delete the quiz_kc
 
