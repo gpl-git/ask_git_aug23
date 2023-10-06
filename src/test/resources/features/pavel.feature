@@ -2,4 +2,5 @@
 
   Feature: Learning Git Commands
     Given I create a branch
-  When
+    When I wait 5 sec
+
